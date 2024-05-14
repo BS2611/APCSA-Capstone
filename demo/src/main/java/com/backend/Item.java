@@ -19,7 +19,10 @@ public class Item {
     }
     public Item(int barcode){
         this.barcode = barcode;
-        //TODO: Get Info from Data
+        Item newItem = JsonEditor.getItems(barcode);
+        this.itemName = newItem.itemName;
+        this.costPrice = newItem.costPrice;
+        this.salePrice = newItem.salePrice;
     }
     public int getBarcode() {
         return barcode;
@@ -55,7 +58,8 @@ public class Item {
         return barcode +"+"+itemName+"+"+costPrice+"+"+salePrice;
     }
     public static Item toItem(String str){
-        String newStr[] = str.split("+");
+        str=str.substring(1,str.length()-1);
+        String newStr[] = str.split("\\+");
         Item item = new Item(Integer.parseInt(newStr[0]), newStr[1], Double.parseDouble(newStr[2]), Double.parseDouble(newStr[3]));
         return item;
     }

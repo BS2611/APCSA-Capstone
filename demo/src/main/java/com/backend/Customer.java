@@ -7,8 +7,20 @@ public class Customer {
     final static public  int CARD =2;
     private String address;
     private int id;
+    private String firstName;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    private String lastName;
+    public String getLastName() {
+        return lastName;
+    }
     protected int getId() {
         return id;
+    }
+    public void printId(){
+        System.out.println(this.id);
     }
 
     public String getAddress() {
@@ -21,20 +33,41 @@ public class Customer {
 
     public Customer(int id ) {
         this.id = id;
+        if (verifyId(id)) {
+            String[] customer = JsonEditor.getCustomer(id);
+            this.firstName = customer[0];
+            this.lastName = customer[1];
+            this.address = customer[2];
+        }
 
+
+    }
+
+
+    public Customer(String firstName, String lastName, String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.id = generateNewID();
+        save();
+        
+    }
+
+    private void save() {
+     JsonEditor.saveCustomer(this)   ;
     }
 
     public static boolean verifyId(int id) {
-        // TODO: Write the implemetation of this method
-
-        return true;
+         ArrayList<Integer> allUserIds = JsonEditor.getAllUserIds();
+        if(allUserIds.contains(id)){
+            return true;
+        }
+        return false;
     }
 
     public static int generateNewID(){
-        // TODO: Write the implemetation of this method
-        ArrayList<Integer> allUserIds = JsonEditor.getAllUserIds();
-        int newId =0;
-        while (!allUserIds.contains(newId)) {
+        int newId =1000;
+        while (verifyId(newId)) {
             newId = (int)(Math.random()*(9999-1000+1))+1000;
         }
         return newId;

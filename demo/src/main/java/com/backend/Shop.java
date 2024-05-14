@@ -12,16 +12,7 @@ public class Shop {
             JsonEditor.addItem(item);
         }
     }
-    public static Item[] getItems(){
-        //TODO: Change the logic
-        return null;
-    }
-
-    public static boolean barcodeExsists(int inputBarcode) {
-        // TODO Lookup for items
-        return true;
-    }
-    
+       
 
     public static void newOrder(Customer customer, ArrayList<Item> inputItems, ArrayList<Integer> inputQuantity,
             int paymentType) {
@@ -29,7 +20,18 @@ public class Shop {
 
     }
     public static void getPendingOrders(){
+        JsonEditor.showPendingOrders();
 
+    }
+
+
+    public static void removeCurrentOrder(int orderNo) {
+        JsonEditor.removeOrderFromCurrent(orderNo);
+    }
+
+
+    public static void removeItem(int barcode) {
+        JsonEditor.removeItem(barcode);
     }
 
 }

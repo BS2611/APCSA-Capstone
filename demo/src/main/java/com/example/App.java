@@ -16,9 +16,9 @@ public class App {
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    int choice = -1;
+    int choice = 0;
     JsonEditor.init();
-    while (choice == -1) {
+    while (choice >=0) {
       System.out.println("Welcome to the Grocery Store");
       System.out.println("Please select your chocie by selecting the corresponding number");
       System.out.println("YOU CAN STOP BY ENTERING -1");
@@ -32,6 +32,7 @@ public class App {
         System.out.println("2. Add Item");
         System.out.println("3.Get Stats");
         System.out.println("4.Remove an Order from current status");
+        System.out.println("5. Remove Item");
         choice = sc.nextInt();
         if (choice == 1) {
           Shop.getPendingOrders();
@@ -54,7 +55,7 @@ public class App {
             double sp = sc.nextInt();
             Item item = new Item(barcode, itemName, cp, sp);
             items.add(item);
-            System.out.println("Do you want to continue?Penter any number to continue and -1 toEXIT");
+            System.out.println("Do you want to continue?Enter any number to continue and -1 to EXIT");
             userinput =sc.nextInt();
           }
           Shop.addItems(items);
@@ -73,13 +74,18 @@ public class App {
           System.out.println("You sold good worth of " + currentSale);
 
         } else if (choice == 4) {
-          // TODO:Get List of Current Orders and print them
-          System.out.println("Enter the order number which you want to remov from the current list");
+          System.out.println("Enter the order number which you want to remove from the current list");
           int orderNo = sc.nextInt();
-          // TODO:Remove the order from the list
+          Shop.removeCurrentOrder(orderNo);
+        } else if(choice ==5){
+          System.out.println("Enter the barcode of the item you want to remove");
+          int barcode = sc.nextInt();
+          Shop.removeItem(barcode);
+          System.out.println("done!");
+
         }
       }
-
+      System.out.println();
     }
 
   }

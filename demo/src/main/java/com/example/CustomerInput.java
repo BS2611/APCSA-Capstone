@@ -12,12 +12,21 @@ public class CustomerInput {
         // TODO Auto-generated method stub
         int choice =0;
         Scanner sc = new Scanner(System.in);
-        while (choice ==-1) {
+        while (choice !=-1) {
             System.out.println("1. Use as a New Customer");
             System.out.println("2. Use as a Old Customer");
             choice =sc.nextInt();
             if(choice ==1){
-                //TODO:Write the logic
+                System.out.println("Enter your first name");
+                String firstName = sc.next();
+                System.out.println("Enter your last name");
+                String lastName = sc.next();
+                System.out.println("Enter your address");
+                String address = sc.next();
+                Customer customer = new Customer(firstName,lastName,address);
+                System.out.println("Your id is ");
+                customer.printId();
+
             }
             else if (choice== 2 ){
                 System.out.println("Enter your customerID");
@@ -30,6 +39,7 @@ public class CustomerInput {
                 }
                 System.out.println("1. Online Customer");
                 System.out.println("2. Offline Customer");
+                choice = sc.nextInt();
                 if (choice == 1) {
                     System.out.println("1. Buy");
                     System.out.println("2. Return");
@@ -38,14 +48,14 @@ public class CustomerInput {
                         ArrayList<Item> inputBarcodes = new ArrayList<Item>();
                         ArrayList<Integer> inputQuantities = new ArrayList<Integer>();
                         int inputBarcode =0,inputQuantity;
-                        OnlineCustomer customer =null;;
-                        while (inputBarcode>0) {
+                        OnlineCustomer customer =null;
+                        while (inputBarcode>=0) {
                             System.out.print("Enter the barcode of the item you want to buy. Enter -1 to exit ");
                             inputBarcode = sc.nextInt(); 
                             if(inputBarcode<=0){
                                 break;
                             }
-                            if(!Shop.barcodeExsists(inputBarcode)){
+                            if(!Item.doesItemExsist(inputBarcode)){
                                 System.out.println("Not a valid barcode");
                                 continue;
                             }
@@ -73,6 +83,8 @@ public class CustomerInput {
                         }
                         customer.buyItems(inputBarcodes, inputQuantities);
 
+                    }else if(choice ==2){
+                        System.out.println("Feature coming soon");
                     }
                 }
                 if (choice == 2) {
@@ -80,28 +92,45 @@ public class CustomerInput {
                     System.out.println("2. Return");
                     choice = sc.nextInt();
                     if (choice == 1) {
+                        ArrayList<Item> inputBarcodes = new ArrayList<Item>();
+                        ArrayList<Integer> inputQuantities = new ArrayList<Integer>();
+                        int inputBarcode = 0, inputQuantity;
+                        Customer customer = null;
+                        while(inputBarcode>=0){
                         System.out.println("Enter the barcode of the item you want to buy");
-                        int inputBarcode = sc.nextInt();
+                        inputBarcode = sc.nextInt();
+                        if (inputBarcode <= 0) {
+                            break;
+                        }
+                        if (!Item.doesItemExsist(inputBarcode)) {
+                            System.out.println("Not a valid barcode");
+                            continue;
+                        }
                         System.out.println("Enter the quantity of the item you want to buy");
-                        int inputQuantity = sc.nextInt();
-                        System.out.print("Payment method Cash/Card[1/2] ");
-                        int paymentType = sc.nextInt();
-                        Customer customer = new Customer(inputID);
+                        inputQuantity = sc.nextInt();
+                        Item item = new Item(inputBarcode);
+                        inputBarcodes.add(item);
+                        inputQuantities.add(inputQuantity);
+
+                    }
+                    System.out.print("Payment method Cash/Card[1/2] ");
+                    int paymentType = sc.nextInt();
+                        customer = new Customer(inputID);
                         //TODO:Convert it into Array
-                        //customer.buyItem(inputBarcode, inputQuantity, paymentType);
+                        customer.buyItems(inputBarcodes, inputQuantities, paymentType);
 
                     } else if (choice == 2) {
-                        System.out.println("Enter the barcode of the item you want to return");
-                        int inputBarcode = sc.nextInt();
-                        System.out.println("Enter the quantity of the item you want to return [-1 for all]");
-                        int inputQuantity = sc.nextInt();
-                        Customer customer = new Customer(inputID);
-                        if (inputQuantity == -1) {
-                            customer.returnItem(inputBarcode);
-                        } else if (inputQuantity > 0) {
-                            customer.returnItem(inputBarcode, inputQuantity);
-                        }
-
+                        // System.out.println("Enter the barcode of the item you want to return");
+                        // int inputBarcode = sc.nextInt();
+                        // System.out.println("Enter the quantity of the item you want to return [-1 for all]");
+                        // int inputQuantity = sc.nextInt();
+                        // Customer customer = new Customer(inputID);
+                        // if (inputQuantity == -1) {
+                        //     customer.returnItem(inputBarcode);
+                        // } else if (inputQuantity > 0) {
+                        //     customer.returnItem(inputBarcode, inputQuantity);
+                        // }
+                        System.out.println("Feature coming soon");
                     }
                 }
             }
